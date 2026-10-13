@@ -1,0 +1,16 @@
+# build output
+*.exe
+!/MagicFn.exe
+!/MagicFnSetup.exe
+driver/build/
+
+# Apple's Boot Camp driver: not ours to redistribute, see README
+bootcamp-magic2-original/
+
+# unrelated local tools
+DpiPopup.cs
+hidlisten.cs
+
+.idea/
+.vs/
+.claude/

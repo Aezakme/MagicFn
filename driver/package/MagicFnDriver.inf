@@ -1,0 +1,69 @@
+; MagicFnDriver: UMDF2 HID minidriver for the keyboard interface of the Magic Keyboard with Touch ID, USB-C (05AC:0321).
+; Stack, top to bottom: HIDClass + mshidumdf (upper filter), WUDFRd (MagicFnDriver.dll, function driver, reaches the
+; device through the reflector's native USB dispatcher, so there is no WinUsb).
+; Apple's KeyMagic2 must not be in this stack: it reads the transfer buffer of every interrupt URB directly, the
+; reflector passes an MDL instead, and KeyMagic2 bugchecks on the null pointer.
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=HIDClass
+ClassGuid={745a17a0-74d3-11d0-b6fe-00a0c90f57da}
+Provider=%Provider%
+CatalogFile=MagicFnDriver.cat
+DriverVer = 10/14/2026,3.52.9.462
+PnpLockdown=1
+
+[Manufacturer]
+%Provider%=Devices,NTamd64.10.0...17763
+
+[Devices.NTamd64.10.0...17763]
+%DeviceDesc%=MagicFnDriver,USB\VID_05AC&PID_0321&MI_01
+
+[SourceDisksNames]
+1=%DiskName%
+
+[SourceDisksFiles]
+MagicFnDriver.dll=1
+
+[DestinationDirs]
+UMDriverCopy=13
+
+[UMDriverCopy]
+MagicFnDriver.dll
+
+[MagicFnDriver.NT]
+Include=WUDFRD.inf,MsHidUmdf.inf
+Needs=WUDFRD.NT,MsHidUmdf_UpperFilter.NT
+CopyFiles=UMDriverCopy
+
+[MagicFnDriver.NT.HW]
+Include=WUDFRD.inf,MsHidUmdf.inf
+Needs=WUDFRD.NT.HW,MsHidUmdf_UpperFilter.NT.HW
+AddReg=MagicFnDriver_Filters
+
+[MagicFnDriver_Filters]
+HKR,,"UpperFilters",0x00010000,"mshidumdf"
+
+[MagicFnDriver.NT.Services]
+Include=WUDFRD.inf,MsHidUmdf.inf
+Needs=WUDFRD.NT.Services,MsHidUmdf_UpperFilter.NT.Services
+
+[MagicFnDriver.NT.Wdf]
+UmdfService=MagicFnDriver,MagicFnDriver_Install
+UmdfServiceOrder=MagicFnDriver
+UmdfDispatcher=NativeUSB
+; mshidumdf is a kernel-mode client and sends requests without a file object
+UmdfKernelModeClientPolicy=AllowKernelModeClients
+UmdfFileObjectPolicy=AllowNullAndUnknownFileObjects
+UmdfMethodNeitherAction=Copy
+UmdfFsContextUsePolicy=CanUseFsContext2
+
+[MagicFnDriver_Install]
+UmdfLibraryVersion=2.15.0
+ServiceBinary=%13%\MagicFnDriver.dll
+
+[Strings]
+Provider="MagicFn"
+DeviceDesc="Magic Keyboard with Touch ID (MagicFn)"
+DiskName="MagicFn driver installation disk"
+
