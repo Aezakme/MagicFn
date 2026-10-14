@@ -163,6 +163,12 @@ NTSTATUS OnDeviceAdd(WDFDRIVER driver, PWDFDEVICE_INIT init)
     if (!NT_SUCCESS(status)) return status;
     DEVICE_CONTEXT* context = GetContext(device);
 
+    // Without this the keyboard shows up under "Safely Remove Hardware"; hidusb sets the same flag.
+    WDF_DEVICE_PNP_CAPABILITIES capabilities;
+    WDF_DEVICE_PNP_CAPABILITIES_INIT(&capabilities);
+    capabilities.SurpriseRemovalOK = WdfTrue;
+    WdfDeviceSetPnpCapabilities(device, &capabilities);
+
     status = WdfSpinLockCreate(WDF_NO_OBJECT_ATTRIBUTES, &context->Lock);
     if (!NT_SUCCESS(status)) return status;
 

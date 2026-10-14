@@ -10,7 +10,7 @@ Class=HIDClass
 ClassGuid={745a17a0-74d3-11d0-b6fe-00a0c90f57da}
 Provider=%Provider%
 CatalogFile=MagicFnDriver.cat
-DriverVer = 10/14/2026,3.52.9.462
+DriverVer = 10/14/2026,4.41.8.181
 PnpLockdown=1
 
 [Manufacturer]
