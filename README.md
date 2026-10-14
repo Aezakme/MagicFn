@@ -4,6 +4,13 @@ The Fn key, the whole top row, brightness and the Lock button for the Apple Magi
 
 Tested on a Magic Keyboard with Touch ID, USB-C (`VID_05AC` `PID_0321`) over a cable, Windows 11 23H2, external monitor on DisplayPort.
 
+> [!WARNING]
+> **This driver sees every key you press on this keyboard, passwords included.** That is unavoidable for a keyboard driver: MagicFnDriver replaces the standard Windows one, so every keystroke passes through it, and it rewrites some of them to make the Fn layer work.
+>
+> What it does with them: reads a report from the keyboard, applies the Fn layer, hands it to Windows. It does not store keystrokes and does not send them anywhere — the driver has no file, registry or network code. The MagicFn tray program never sees ordinary keys at all, only the Lock button and F3–F6.
+>
+> Do not take that on trust. The whole driver is one file, [`driver/MagicFnDriver.c`](driver/MagicFnDriver.c), about 500 lines. If you do not trust the prebuilt DLL, read the source and [build it yourself](#building).
+
 ## What works
 
 | Keys | Action |
