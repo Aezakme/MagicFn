@@ -22,7 +22,7 @@ static class Settings
     public static bool MediaByDefault; // false: F1-F12 are function keys and Fn gives media; true: the reverse
     public static int FnEsc;           // 0 nothing, 1 lock, 2 sleep, 3 Task Manager
     public static int LockKey = 1;     // same values, for the Lock button
-    public static bool LockKeySwitchesInput; // the Lock button switches the monitor input instead
+    public static bool LockKeySwitchesInput; // the Lock button switches the monitor input before its own action
     public static bool InputSwitchAvailable; // machine-wide, set by "MagicFnSetup lg": the input switch is proven on LG monitors only
     public static bool ExternalMonitor = true; // mirror the Windows brightness level to DDC/CI monitors (not needed on a laptop panel)
     public static int InputSource;     // index into Monitors.Inputs that the Lock button switches to; 0 = none
@@ -432,7 +432,7 @@ class Watcher : NativeWindow
             if ((keys & Driver.Lock) != 0)
             {
                 if (Settings.InputSwitchAvailable && Settings.LockKeySwitchesInput && Settings.InputSource != 0) Monitors.SwitchInput(Settings.InputSource);
-                else Act(Settings.LockKey);
+                Act(Settings.LockKey);
             }
             // The Windows counterparts of the icons on the keycaps.
             if ((keys & Driver.F3) != 0) WinShortcut(VK_TAB);     // Mission Control -> Task View

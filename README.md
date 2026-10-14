@@ -140,7 +140,7 @@ A folder with `MagicFn.exe`, `MagicFnSetup.exe` and `driver\package` (four files
 - **Fn + Esc** — nothing, lock, sleep or Task Manager.
 - **Lock button** — nothing, lock or sleep.
 - The F3–F6 actions are not configurable.
-- **Lock button switches monitor input** — present only after an install with the `LG` flag; the button switches the monitor to the input chosen in the list next to it (DisplayPort 1/2, HDMI 1/2) instead of its own action. One way only: while the monitor shows another input it ignores commands from this computer (checked on an LG 27GR75Q). Switch back with the monitor's own button or with the same command from the second device.
+- **Lock button switches monitor input** — present only after an install with the `LG` flag; the button switches the monitor to the input chosen in the list next to it (DisplayPort 1/2, HDMI 1/2) and then does its own action; choose "Nothing" for the Lock button to only switch. One way only: while the monitor shows another input it ignores commands from this computer (checked on an LG 27GR75Q). Switch back with the monitor's own button or with the same command from the second device.
 
 "Apply" saves the settings without closing the window. They are stored in `HKCU\Software\MagicFn`.
 
