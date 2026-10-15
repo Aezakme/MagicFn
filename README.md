@@ -37,7 +37,7 @@ Who does what:
 - **the driver alone, without MagicFn** — the Fn layer, brightness, tracks and volume;
 - **MagicFn** — the Lock button, F3–F6, Fn + Esc, external monitor brightness and the top row mode. While the program is not running, these keys do nothing, and the top row works as standard F1–F12 with media on Fn.
 
-Not working: Touch ID, and all of the above over Bluetooth. The driver does not arm the keyboard to wake the computer.
+Not working: Touch ID, and all of the above over Bluetooth. Waking the computer with the keyboard has not been tested.
 
 ## Where the driver sits
 

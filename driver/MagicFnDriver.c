@@ -155,6 +155,8 @@ NTSTATUS OnDeviceAdd(WDFDRIVER driver, PWDFDEVICE_INIT init)
     pnp.EvtDeviceD0Entry = OnD0Entry;
     pnp.EvtDeviceD0Exit = OnD0Exit;
     WdfDeviceInitSetPnpPowerEventCallbacks(init, &pnp);
+    // HIDClass above us owns power policy and sends the D-state IRPs; a second owner is killed by the framework on sleep.
+    WdfDeviceInitSetPowerPolicyOwnership(init, FALSE);
 
     WDF_OBJECT_ATTRIBUTES attributes;
     WDF_OBJECT_ATTRIBUTES_INIT_CONTEXT_TYPE(&attributes, DEVICE_CONTEXT);
